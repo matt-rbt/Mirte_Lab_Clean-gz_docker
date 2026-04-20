@@ -1,10 +1,17 @@
-git clone https://github.com/MetroRobots/color_util.git
-git clone https://github.com/mirte-robot/mirte-gazebo.git
+apt-get update && apt-get install -y \
+    ros-humble-moveit \
+    ros-humble-ros2-control \
+    ros-humble-ros2-controllers \
+    ros-humble-moveit-servo \
+    ros-humble-moveit-visual-tools \
+    ros-humble-gazebo-ros-pkgs \
+    ros-humble-slam-toolbox \
 
-git config --global --add safe.directory /workspaces/ros2_humble_dev/lcr/src/mirte-ros-packages
-git config --global --add safe.directory /workspaces/ros2_humble_dev/lcr/src/mirte-ros-packages
-git config --global --add safe.directory /workspaces/ros2_humble_dev/lcr/src/mirte-ros-packages
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
+git submodule update --init --recursive
+
+vcs import src/ < mirte_lc/sources.repos
 vcs import src/ < src/mirte-gazebo/sources.repos
 rosdep install -y --from-paths src/ --ignore-src --rosdistro humble
 

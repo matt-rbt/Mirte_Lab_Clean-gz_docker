@@ -4,6 +4,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # Install basic tools
 RUN apt-get update && apt-get install -y \
+    python3 pip \
     wget \
     curl \
     lsb-release \
@@ -20,6 +21,10 @@ RUN apt-get update && apt-get install -y \
     ros-humble-moveit-servo \
     ros-humble-moveit-visual-tools \
     ros-humble-gazebo-ros-pkgs \
+    ros-humble-slam-toolbox \
+    ros-humble-cv-bridge \
+    ros-humble-octomap-server \
+    ros-humble-topic-tools \
     libx11-6 \
     libxext6 \
     libxrender1 \
@@ -43,9 +48,11 @@ COPY ./lcr /root/ws/lcr
 
 # Update git submodules
 RUN cd /root/ws/lcr/src/mirte-ros-packages && \
-    git submodule update --init --recursive
+git submodule update --init --recursive
 
 # Refresh apt index for runtime container
 RUN apt-get update
+RUN cd lcr/src/mirte_lc && pip3 install requirements.txt && cd
+RUN pip install "numpy<2"
 
 CMD ["bash"]
