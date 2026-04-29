@@ -1,16 +1,22 @@
 {
-  "name": "Existing Dockerfile",
+  "name": "ROS2 Humble Dev",
+
   "build": {
-    "context": "..",
-    "dockerfile": "../Dockerfile"
+    "dockerfile": "../Dockerfile",
+    "context": ".."
   },
-  
+
+  "workspaceFolder": "/workspaces/lcr",
+
+  "remoteUser": "root",
+
   "runArgs": [
     "--net=host",
-    "--gpus", "all",
+    "--gpus=all",
     "-e", "DISPLAY=${localEnv:DISPLAY}",
     "-v", "/tmp/.X11-unix:/tmp/.X11-unix:rw"
   ],
 
-  "postCreateCommand": "cd lcr && rosdep update && rosdep install --from-paths src --ignore-src -r -y"
+  "postCreateCommand": "bash -c 'apt-get update && source /opt/ros/humble/setup.bash && cd /workspaces/lcr && rosdep update && rosdep install --from-paths src --ignore-src -r -y'"
+
 }

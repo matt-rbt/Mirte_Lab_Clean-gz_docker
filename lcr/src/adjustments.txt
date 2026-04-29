@@ -53,3 +53,6 @@ mirte-ros-packages/mirte_description/urdf/ultrasonic.urdf
            
            <resolution>0.01</resolution>
          </range>
+
+mirte-ros-packages/mirte_description/urdf/arm.urdf.xacro
+  - rename mimic joints with "_mimic"

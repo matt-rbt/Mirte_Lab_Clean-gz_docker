@@ -2,19 +2,10 @@ FROM osrf/ros:humble-desktop-full
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install basic tools
-RUN apt-get update && apt-get install -y \
-    python3 pip \
-    wget \
-    curl \
-    lsb-release \
-    gnupg2 \
-    software-properties-common \
-    git \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install MoveIt, ROS2 control, Gazebo GUI dependencies
-RUN apt-get update && apt-get install -y \
+# Core tools + ROS dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    python3-pip \
+    git wget curl lsb-release gnupg2 software-properties-common \
     ros-humble-moveit \
     ros-humble-ros2-control \
     ros-humble-ros2-controllers \
@@ -25,34 +16,35 @@ RUN apt-get update && apt-get install -y \
     ros-humble-cv-bridge \
     ros-humble-octomap-server \
     ros-humble-topic-tools \
-    libx11-6 \
-    libxext6 \
-    libxrender1 \
-    libxcb1 \
-    libx11-xcb1 \
-    libxcb-glx0 \
-    libxkbcommon-x11-0 \
-    libgl1-mesa-glx \
-    libgl1-mesa-dri \
-    mesa-utils \
+    ros-humble-joint-state-publisher \
+    ros-humble-joint-state-publisher-gui \
+    ros-humble-navigation2 \
+    ros-humble-rosbridge-server \
+    ros-humble-usb-cam \
+    ros-humble-web-video-server \
+    libgpiod-dev \
+    libpcl-dev \
+    ros-humble-pcl-ros \
+    libx11-6 libxext6 libxrender1 libxcb1 libx11-xcb1 \
+    libxcb-glx0 libxkbcommon-x11-0 \
+    libgl1-mesa-glx libgl1-mesa-dri mesa-utils \
     && rm -rf /var/lib/apt/lists/*
 
-# Source ROS 2 automatically
+# Python tools
+RUN pip3 install --no-cache-dir gcovr pytest "numpy<2"
+RUN pip3 install shapely
+
+# Workspace (IMPORTANT: must match devcontainer)
+WORKDIR /workspaces/lcr
+
+# Copy workspace
+COPY ./lcr /workspaces/lcr
+
+# Init submodules safely
+RUN git -C /workspaces/lcr/src/mirte-ros-packages \
+    submodule update --init --recursive || true
+
+# ROS sourcing
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
-
-# Set workspace
-WORKDIR /root/ws
-
-# Copy your ROS workspace into the container
-COPY ./lcr /root/ws/lcr
-
-# Update git submodules
-RUN cd /root/ws/lcr/src/mirte-ros-packages && \
-git submodule update --init --recursive
-
-# Refresh apt index for runtime container
-RUN apt-get update
-RUN cd lcr/src/mirte_lc && pip3 install requirements.txt && cd
-RUN pip install "numpy<2"
 
 CMD ["bash"]
