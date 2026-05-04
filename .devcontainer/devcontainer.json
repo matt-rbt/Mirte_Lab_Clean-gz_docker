@@ -7,6 +7,7 @@
   },
 
   "workspaceFolder": "/workspaces/lcr",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces,type=bind",
 
   "remoteUser": "root",
 
@@ -18,5 +19,4 @@
   ],
 
   "postCreateCommand": "bash -c 'apt-get update && source /opt/ros/humble/setup.bash && cd /workspaces/lcr && rosdep update && rosdep install --from-paths src --ignore-src -r -y'"
-
 }

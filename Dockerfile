@@ -30,6 +30,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libgl1-mesa-glx libgl1-mesa-dri mesa-utils \
     && rm -rf /var/lib/apt/lists/*
 
+# Fields2Cover deps
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    software-properties-common
+RUN add-apt-repository ppa:ubuntugis/ppa
+RUN apt-get update
+RUN apt-get install --no-install-recommends build-essential ca-certificates cmake \
+        doxygen g++ git libeigen3-dev libgdal-dev libpython3-dev python3 python3-pip \
+        python3-matplotlib python3-tk lcov libgtest-dev libtbb-dev swig libgeos-dev \
+        gnuplot libtinyxml2-dev nlohmann-json3-dev
+RUN python3 -m pip install gcovr
+
 # Python tools
 RUN pip3 install --no-cache-dir gcovr pytest "numpy<2"
 RUN pip3 install shapely

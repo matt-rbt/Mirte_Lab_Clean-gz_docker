@@ -29,9 +29,9 @@ https://github.com/user-attachments/assets/27938a1a-20a6-4f93-9468-7725df9ea4b7
     git submodule update --init --recursive
     cd lcr
     ```
-
 3. install dependencies for this mirte_lc then mirte-gazebo
     ```sh
+    vcs import src/ < sources.repos
     vcs import src/ < src/mirte_lc/sources.repos
     vcs import src/ < src/mirte-gazebo/sources.repos
     ```
