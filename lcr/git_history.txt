@@ -1,0 +1,9 @@
+* 14700b3 - update dockerfile and readme (2026-05-04)
+* 8ba0fa6 - update to latest changes (2026-04-29)
+*   c1f137e - Merge branch 'main' of https://github.com/machine0herald/Mirte_Lab_Clean-gz_docker (2026-04-20)
+|\  
+| * 3430675 - Update README.md (2026-03-12)
+| * ace7cbf - Update README.md (2026-03-12)
+* | 964e992 - . (2026-04-20)
+|/  
+* ad54927 - reinit git repo (2026-03-10)

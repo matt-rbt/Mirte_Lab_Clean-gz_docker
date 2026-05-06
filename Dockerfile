@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common
 RUN add-apt-repository ppa:ubuntugis/ppa
 RUN apt-get update
-RUN apt-get install --no-install-recommends build-essential ca-certificates cmake \
+RUN apt-get install -y --no-install-recommends build-essential ca-certificates cmake \
         doxygen g++ git libeigen3-dev libgdal-dev libpython3-dev python3 python3-pip \
         python3-matplotlib python3-tk lcov libgtest-dev libtbb-dev swig libgeos-dev \
         gnuplot libtinyxml2-dev nlohmann-json3-dev

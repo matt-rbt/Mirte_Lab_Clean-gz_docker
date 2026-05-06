@@ -31,7 +31,7 @@ https://github.com/user-attachments/assets/27938a1a-20a6-4f93-9468-7725df9ea4b7
     ```
 3. install dependencies for this mirte_lc then mirte-gazebo
     ```sh
-    vcs import src/ < sources.repos
+    vcs import src/ < src/sources.repos
     vcs import src/ < src/mirte_lc/sources.repos
     vcs import src/ < src/mirte-gazebo/sources.repos
     ```
@@ -71,15 +71,23 @@ https://github.com/user-attachments/assets/27938a1a-20a6-4f93-9468-7725df9ea4b7
 
 ## Docker Startup
 
-1. For NVidia GPU's:
+1. Add user to perms group
+   ```sh
+   sudo groupadd docker
+   sudo usermod -aG docker $USER
+   ```
+
+2. For NVidia GPU's:
     ```sh
     sudo nvidia-ctk runtime configure --runtime=docker
     ```
 
-2. Start docker engine 
+3. Start docker engine 
     ```sh
     sudo systemctl start docker
     ```
+
+> add docker engine startup to bashrc with: ```echo 'sudo systemctl start docker' >> ~/.bashrc```
 
 > NOTE:  It is reccomended to use the vscode extensions instead of the following
 
